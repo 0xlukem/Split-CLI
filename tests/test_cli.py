@@ -1,0 +1,100 @@
+from pathlib import Path
+
+from rich.text import Text
+from typer.testing import CliRunner
+
+from split_cli.cli import app
+
+
+runner = CliRunner()
+
+
+def test_cli_happy_path_keeps_output_in_english(monkeypatch) -> None:
+    monkeypatch.setattr("split_cli.ui.build_chart_text", lambda *args, **kwargs: Text("chart"))
+
+    result = runner.invoke(
+        app,
+        input="\n".join(
+            [
+                "Road trip",
+                "3",
+                "Alice",
+                "Ben",
+                "Cara",
+                "1",
+                "90",
+                "Fuel",
+                "n",
+                "n",
+                "n",
+            ]
+        )
+        + "\n",
+        color=False,
+    )
+
+    assert result.exit_code == 0
+    assert "Session setup" in result.stdout
+    assert "Participant name #1" in result.stdout
+    assert "Expense breakdown" in result.stdout
+    assert "Do you want more info about this split?" in result.stdout
+    assert "Do you want to export this session to JSON?" in result.stdout
+
+
+def test_cli_shows_optional_insights_when_confirmed(monkeypatch, tmp_path: Path) -> None:
+    monkeypatch.setattr("split_cli.ui.build_chart_text", lambda *args, **kwargs: Text("chart"))
+
+    result = runner.invoke(
+        app,
+        ["--export-json", str(tmp_path / "trip.json")],
+        input="\n".join(
+            [
+                "Trip",
+                "3",
+                "Alice",
+                "Ben",
+                "Cara",
+                "1",
+                "90",
+                "Hotel",
+                "n",
+                "y",
+            ]
+        )
+        + "\n",
+        color=False,
+    )
+
+    assert result.exit_code == 0
+    assert "Deep dive insights" in result.stdout
+    assert "Top spender" in result.stdout
+    assert "Most expensive expense" in result.stdout
+    assert "Paid by participant" in result.stdout
+
+
+def test_cli_skips_optional_insights_when_declined(monkeypatch) -> None:
+    monkeypatch.setattr("split_cli.ui.build_chart_text", lambda *args, **kwargs: Text("chart"))
+
+    result = runner.invoke(
+        app,
+        input="\n".join(
+            [
+                "Trip",
+                "2",
+                "Alice",
+                "Ben",
+                "1",
+                "50",
+                "Lunch",
+                "n",
+                "n",
+                "n",
+            ]
+        )
+        + "\n",
+        color=False,
+    )
+
+    assert result.exit_code == 0
+    assert "Do you want more info about this split?" in result.stdout
+    assert "Deep dive insights" not in result.stdout

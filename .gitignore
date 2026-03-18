@@ -1,0 +1,63 @@
+# ----------------------------
+# Python
+# ----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Compiled extensions
+*.so
+
+# ----------------------------
+# Virtual environments
+# ----------------------------
+.venv/
+venv/
+env/
+ENV/
+
+# ----------------------------
+# Packaging / distribution
+# ----------------------------
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# ----------------------------
+# Logs & databases
+# ----------------------------
+*.log
+*.sqlite3
+*.db
+
+# ----------------------------
+# Environment variables
+# ----------------------------
+.env
+.env.*
+
+# ----------------------------
+# Testing
+# ----------------------------
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ----------------------------
+# IDE / Editor
+# ----------------------------
+.vscode/
+.github/instructions/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# ----------------------------
+# CLI / custom outputs 
+# ----------------------------
+output/
+reports/
+*.csv
