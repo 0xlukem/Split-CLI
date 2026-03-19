@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "split-cli"
 version = "0.1.0a1"
-description = "splitting group expenses made it fun on your terminal"
+description = "Splitting group expenses made it fun on your terminal"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { file = "LICENSE" }
