@@ -15,7 +15,7 @@
 ## Installation
 
 ```bash
-pip install --pre split-cli
+pip install split-cli
 ```
 
 ## Quickstart
@@ -24,12 +24,6 @@ Run the interactive app:
 
 ```bash
 split-cli
-```
-
-Or run it directly from the source tree:
-
-```bash
-PYTHONPATH=src python -m split_cli.cli
 ```
 
 Follow the prompts to:
@@ -48,6 +42,9 @@ Write the final report to a JSON file:
 split-cli --export-json reports/weekend-trip.json
 ```
 
+In the interactive flow, JSON backups are stored by default in `~/.split-cli/backups/` and use the pattern `<event-name>-YYYY-MM-DD.json`.
+If you confirm the export at the end of the session, the CLI only asks for the backup file name and keeps the file inside that folder.
+
 The exported report includes:
 
 - event summary
@@ -59,8 +56,6 @@ The exported report includes:
 ## Current limitations
 
 - equal split only across all participants
-- no weighted shares or per-person consumption
-- no saved history yet
 - no CSV export yet
-- better grap
+- better graphics
 - UI animations

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 from pathlib import Path
 
 import typer
@@ -8,7 +9,11 @@ from rich.prompt import Confirm
 
 from split_cli.models import Event, EventReport, Expense, Person
 from split_cli.services.analytics import build_insights
-from split_cli.services.exporter import build_default_export_path, export_report_to_json
+from split_cli.services.exporter import (
+    build_default_export_path,
+    build_export_path_from_name,
+    export_report_to_json,
+)
 from split_cli.services.settlements import build_settlements
 from split_cli.services.splitter import build_report
 from split_cli.ui import (
@@ -92,36 +97,38 @@ def collect_expenses(participants: list[Person]) -> list[Expense]:
 
 
 def prompt_export_destination(suggested_path: Path) -> Path:
-    show_info(
-        f"Press Enter to save the JSON to {suggested_path}, or type a different .json path."
+    show_info(f"JSON backups are saved in {suggested_path.parent}. Enter only the file name.")
+
+    raw_name = prompt_text(
+        "Backup file name",
+        default=suggested_path.stem,
     )
-
-    raw_path = prompt_text(
-        "JSON file path",
-        default=str(suggested_path),
-    )
-    destination = Path(raw_path.strip()).expanduser()
-    if destination.suffix.lower() != ".json":
-        destination = destination.with_suffix(".json")
-    return destination
+    return build_export_path_from_name(raw_name, suggested_path.parent, suggested_path.stem)
 
 
-def maybe_export_report(report: EventReport, export_json: Path | None) -> None:
+def maybe_export_report(
+    report: EventReport,
+    export_json: Path | None,
+    session_started_at: datetime,
+) -> None:
     destination = export_json
     if destination is None:
-        if not Confirm.ask("[bold bright_cyan]Do you want to export this session to JSON?[/bold bright_cyan]"):
+        if not Confirm.ask(
+            "[bold bright_cyan]Do you want to save a JSON backup of this session?[/bold bright_cyan]"
+        ):
             return
 
-        suggested_path = build_default_export_path(report.event_name)
+        suggested_path = build_default_export_path(report.event_name, session_started_at)
         destination = prompt_export_destination(suggested_path)
 
     exported_file = export_report_to_json(report, destination)
-    show_success(f"Session exported to {exported_file}")
+    show_success(f"JSON backup saved to {exported_file}")
 
 
 def run_interactive(export_json: Path | None = None) -> None:
     show_welcome()
     show_section("Session setup")
+    session_started_at = datetime.now().astimezone()
 
     event_name = prompt_text("Event name")
     participant_count = prompt_participant_count()
@@ -148,7 +155,7 @@ def run_interactive(export_json: Path | None = None) -> None:
         default=False,
     ):
         show_detailed_insights(full_report.insights)
-    maybe_export_report(full_report, export_json)
+    maybe_export_report(full_report, export_json, session_started_at)
 
 
 @app.callback(invoke_without_command=True)

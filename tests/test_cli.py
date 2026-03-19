@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from pathlib import Path
 
 from rich.text import Text
@@ -38,7 +39,7 @@ def test_cli_happy_path_keeps_output_in_english(monkeypatch) -> None:
     assert "Participant name #1" in result.stdout
     assert "Expense breakdown" in result.stdout
     assert "Do you want more info about this split?" in result.stdout
-    assert "Do you want to export this session to JSON?" in result.stdout
+    assert "Do you want to save a JSON backup of this session?" in result.stdout
 
 
 def test_cli_shows_optional_insights_when_confirmed(monkeypatch, tmp_path: Path) -> None:
@@ -100,9 +101,9 @@ def test_cli_skips_optional_insights_when_declined(monkeypatch) -> None:
     assert "Deep dive insights" not in result.stdout
 
 
-def test_cli_adds_json_extension_to_custom_export_path(monkeypatch, tmp_path: Path) -> None:
+def test_cli_saves_custom_backup_name_in_fixed_directory(monkeypatch, tmp_path: Path) -> None:
     monkeypatch.setattr("split_cli.ui.build_chart_text", lambda *args, **kwargs: Text("chart"))
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr("split_cli.services.exporter.Path.home", lambda: tmp_path)
 
     result = runner.invoke(
         app,
@@ -126,4 +127,47 @@ def test_cli_adds_json_extension_to_custom_export_path(monkeypatch, tmp_path: Pa
     )
 
     assert result.exit_code == 0
-    assert (tmp_path / "y.json").exists()
+    assert "Backup file name" in result.stdout
+    assert "JSON file path" not in result.stdout
+    assert (tmp_path / ".split-cli" / "backups" / "y.json").exists()
+
+
+def test_cli_uses_event_name_and_session_date_for_default_backup_name(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    class FrozenDateTime(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            frozen = cls(2026, 3, 19, 15, 0, tzinfo=timezone.utc)
+            if tz is not None:
+                return frozen.astimezone(tz)
+            return frozen
+
+    monkeypatch.setattr("split_cli.ui.build_chart_text", lambda *args, **kwargs: Text("chart"))
+    monkeypatch.setattr("split_cli.services.exporter.Path.home", lambda: tmp_path)
+    monkeypatch.setattr("split_cli.cli.datetime", FrozenDateTime)
+
+    result = runner.invoke(
+        app,
+        input="\n".join(
+            [
+                "Asado",
+                "2",
+                "Alice",
+                "Ben",
+                "1",
+                "50",
+                "Lunch",
+                "n",
+                "n",
+                "y",
+                "",
+            ]
+        )
+        + "\n",
+        color=False,
+    )
+
+    assert result.exit_code == 0
+    assert (tmp_path / ".split-cli" / "backups" / "asado-2026-03-19.json").exists()
