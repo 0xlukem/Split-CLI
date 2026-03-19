@@ -129,7 +129,7 @@ def test_cli_saves_custom_backup_name_in_fixed_directory(monkeypatch, tmp_path: 
     assert result.exit_code == 0
     assert "Backup file name" in result.stdout
     assert "JSON file path" not in result.stdout
-    assert (tmp_path / ".split-cli" / "backups" / "y.json").exists()
+    assert (tmp_path / ".splitty-cli" / "backups" / "y.json").exists()
 
 
 def test_cli_uses_event_name_and_session_date_for_default_backup_name(
@@ -170,4 +170,4 @@ def test_cli_uses_event_name_and_session_date_for_default_backup_name(
     )
 
     assert result.exit_code == 0
-    assert (tmp_path / ".split-cli" / "backups" / "asado-2026-03-19.json").exists()
+    assert (tmp_path / ".splitty-cli" / "backups" / "asado-2026-03-19.json").exists()

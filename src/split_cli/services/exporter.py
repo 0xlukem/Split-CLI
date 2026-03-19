@@ -7,7 +7,7 @@ from pathlib import Path
 
 from split_cli.models import EventReport
 
-BACKUP_DIRECTORY = Path(".split-cli") / "backups"
+BACKUP_DIRECTORY = Path(".splitty-cli") / "backups"
 
 
 def slugify(value: str) -> str:

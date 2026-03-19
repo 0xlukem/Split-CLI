@@ -1,6 +1,6 @@
-# split-cli
+# splitty-cli
 
-`split-cli` is a Python terminal application for splitting shared expenses with a polished interactive flow, colorful terminal dashboards, and clean settlement suggestions.
+`splitty-cli` is a Python terminal application for splitting shared expenses with a polished interactive flow, colorful terminal dashboards, and clean settlement suggestions.
 
 ## Features
 
@@ -15,7 +15,7 @@
 ## Installation
 
 ```bash
-pip install split-cli
+pip install splitty-cli
 ```
 
 ## Quickstart
@@ -23,7 +23,7 @@ pip install split-cli
 Run the interactive app:
 
 ```bash
-split-cli
+splitty-cli
 ```
 
 Follow the prompts to:
@@ -39,10 +39,10 @@ Follow the prompts to:
 Write the final report to a JSON file:
 
 ```bash
-split-cli --export-json reports/weekend-trip.json
+splitty-cli --export-json reports/weekend-trip.json
 ```
 
-In the interactive flow, JSON backups are stored by default in `~/.split-cli/backups/` and use the pattern `<event-name>-YYYY-MM-DD.json`.
+In the interactive flow, JSON backups are stored by default in `~/.splitty-cli/backups/` and use the pattern `<event-name>-YYYY-MM-DD.json`.
 If you confirm the export at the end of the session, the CLI only asks for the backup file name and keeps the file inside that folder.
 
 The exported report includes:

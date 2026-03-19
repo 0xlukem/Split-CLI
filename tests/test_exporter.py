@@ -42,11 +42,11 @@ def test_build_default_export_path_uses_backup_folder_and_session_date(tmp_path)
         home_dir=tmp_path,
     )
 
-    assert destination == tmp_path / ".split-cli" / "backups" / "asado-2026-03-19.json"
+    assert destination == tmp_path / ".splitty-cli" / "backups" / "asado-2026-03-19.json"
 
 
 def test_build_export_path_from_name_keeps_backup_folder(tmp_path) -> None:
-    backup_dir = tmp_path / ".split-cli" / "backups"
+    backup_dir = tmp_path / ".splitty-cli" / "backups"
 
     destination = build_export_path_from_name("reports/hola", backup_dir, "asado-2026-03-19")
 

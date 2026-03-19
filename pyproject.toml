@@ -3,7 +3,7 @@ requires = ["hatchling>=1.27.0"]
 build-backend = "hatchling.build"
 
 [project]
-name = "split-cli"
+name = "splitty-cli"
 version = "0.1.0a1"
 description = "Splitting group expenses made it fun on your terminal"
 readme = "README.md"
@@ -38,10 +38,10 @@ dev = [
 ]
 
 [project.scripts]
-split-cli = "split_cli.cli:app"
+splitty-cli = "split_cli.cli:app"
 
 [project.urls]
-Homepage = "https://github.com/0xlukem/Split-CLI"
+Homepage = "https://github.com/0xlukem/splitty-cli"
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]

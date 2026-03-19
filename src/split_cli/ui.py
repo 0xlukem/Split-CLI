@@ -17,12 +17,11 @@ from split_cli.models import EventInsights, EventReport, Expense, Person, Transf
 console = Console()
 
 BANNER = r"""
-   _____       ___ __     _ __          ____
-  / ___/____  / (_) /_   (_) /___  ____/ / /
-  \__ \/ __ \/ / / __/  / / / __ \/ __  / /
- ___/ / /_/ / / / /_   / / / /_/ / /_/ /_/
-/____/ .___/_/_/\__/  /_/_/\____/\__,_(_)
-    /_/
+ ____   ____   _      ___   _____  _____ __   __
+/ ___| |  _ \ | |    |_ _| |_   _||_   _|\ \ / /
+\___ \ | |_) || |     | |    | |    | |   \ V /
+ ___) ||  __/ | |___  | |    | |    | |    | |
+|____/ |_|    |_____||___|   |_|    |_|    |_|
 """
 
 
@@ -35,7 +34,7 @@ def show_welcome() -> None:
     banner_text = Text(BANNER.rstrip("\n"), style="bold bright_magenta")
     panel = Panel.fit(
         Align.center(banner_text),
-        title="[bold bright_cyan]split-cli[/bold bright_cyan]",
+        title="[bold bright_cyan]splitty[/bold bright_cyan]",
         subtitle="alpha release",
         border_style="magenta",
         padding=(1, 3),
