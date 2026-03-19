@@ -98,3 +98,32 @@ def test_cli_skips_optional_insights_when_declined(monkeypatch) -> None:
     assert result.exit_code == 0
     assert "Do you want more info about this split?" in result.stdout
     assert "Deep dive insights" not in result.stdout
+
+
+def test_cli_adds_json_extension_to_custom_export_path(monkeypatch, tmp_path: Path) -> None:
+    monkeypatch.setattr("split_cli.ui.build_chart_text", lambda *args, **kwargs: Text("chart"))
+    monkeypatch.chdir(tmp_path)
+
+    result = runner.invoke(
+        app,
+        input="\n".join(
+            [
+                "Trip",
+                "2",
+                "Alice",
+                "Ben",
+                "1",
+                "50",
+                "Lunch",
+                "n",
+                "n",
+                "y",
+                "y",
+            ]
+        )
+        + "\n",
+        color=False,
+    )
+
+    assert result.exit_code == 0
+    assert (tmp_path / "y.json").exists()

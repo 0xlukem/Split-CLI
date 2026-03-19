@@ -95,6 +95,21 @@ def collect_expenses(participants: list[Person]) -> list[Expense]:
             return expenses
 
 
+def prompt_export_destination(suggested_path: Path) -> Path: 
+    show_info(
+        f"Press Enter to save the JSON to {suggested_path}, or type a different .json path."
+    )
+
+    raw_path = prompt_text(
+        "JSON file path",
+        default=str(suggested_path),
+    )
+    destination = Path(raw_path.strip()).expanduser()
+    if destination.suffix.lower() != ".json":
+        destination = destination.with_suffix(".json")
+    return destination
+
+
 def maybe_export_report(report: EventReport, export_json: Path | None) -> None:
     """Prompt the user to export the final report when needed."""
     destination = export_json
@@ -103,8 +118,7 @@ def maybe_export_report(report: EventReport, export_json: Path | None) -> None:
             return
 
         suggested_path = build_default_export_path(report.event_name)
-        raw_path = prompt_text("JSON output path", default=str(suggested_path))
-        destination = Path(raw_path).expanduser()
+        destination = prompt_export_destination(suggested_path)
 
     exported_file = export_report_to_json(report, destination)
     show_success(f"Session exported to {exported_file}")
