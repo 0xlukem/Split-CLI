@@ -1,5 +1,3 @@
-"""Rich-based UI helpers for the interactive CLI."""
-
 from __future__ import annotations
 
 from decimal import Decimal
@@ -29,12 +27,10 @@ BANNER = r"""
 
 
 def format_money(value: Decimal) -> str:
-    """Render a Decimal amount as currency."""
     return f"${value:,.2f}"
 
 
 def show_welcome() -> None:
-    """Render the ASCII intro panel."""
     console.print()
     banner_text = Text(BANNER.rstrip("\n"), style="bold bright_magenta")
     panel = Panel.fit(
@@ -53,27 +49,22 @@ def show_welcome() -> None:
 
 
 def show_section(title: str) -> None:
-    """Print a visual section divider."""
     console.rule(f"[bold bright_magenta]{title}")
 
 
 def show_info(message: str) -> None:
-    """Print an informational message."""
     console.print(f"[bright_cyan]• {message}[/bright_cyan]")
 
 
 def show_success(message: str) -> None:
-    """Print a success message."""
     console.print(f"[bold green]OK  {message}[/bold green]")
 
 
 def show_error(message: str) -> None:
-    """Print an error panel."""
     console.print(Panel(message, title="[bold red]Error[/bold red]", border_style="bright_red"))
 
 
 def prompt_text(message: str, default: str | None = None, allow_blank: bool = False) -> str:
-    """Ask for a text input and ensure it is valid."""
     while True:
         value = Prompt.ask(f"[bold bright_cyan]{message}[/bold bright_cyan]", default=default or "")
         if allow_blank:
@@ -84,14 +75,12 @@ def prompt_text(message: str, default: str | None = None, allow_blank: bool = Fa
 
 
 def prompt_optional_text(message: str) -> str | None:
-    """Ask for an optional text input."""
     value = Prompt.ask(f"[bold bright_cyan]{message}[/bold bright_cyan]", default="")
     cleaned = value.strip()
     return cleaned or None
 
 
 def prompt_participant_count() -> int:
-    """Ask for the participant count."""
     while True:
         count = IntPrompt.ask("[bold bright_cyan]How many people are joining?[/bold bright_cyan]")
         if count >= 2:
@@ -110,7 +99,6 @@ def prompt_amount(message: str) -> str:
 
 
 def prompt_person_choice(message: str, people: Sequence[Person]) -> Person:
-    """Select a participant by index."""
     table = Table(title="Participants", header_style="bold bright_cyan")
     table.add_column("#", justify="right", style="bright_black")
     table.add_column("Name", style="bold white")
@@ -126,7 +114,6 @@ def prompt_person_choice(message: str, people: Sequence[Person]) -> Person:
 
 
 def show_people_table(people: Sequence[Person]) -> None:
-    """Render the participants table."""
     if not people:
         return
 
@@ -141,7 +128,6 @@ def show_people_table(people: Sequence[Person]) -> None:
 
 
 def show_expenses_table(expenses: Sequence[Expense]) -> None:
-    """Render the expenses table."""
     if not expenses:
         return
 
@@ -163,7 +149,6 @@ def show_expenses_table(expenses: Sequence[Expense]) -> None:
 
 
 def build_chart_text(title: str, labels: Sequence[str], values: Sequence[Decimal]) -> Text:
-    """Build a chart as ANSI text using plotext."""
     if not labels:
         return Text("No chart data available.", style="dim")
 
@@ -183,7 +168,6 @@ def build_chart_text(title: str, labels: Sequence[str], values: Sequence[Decimal
 
 
 def show_chart_panel(title: str, labels: Sequence[str], values: Sequence[Decimal]) -> None:
-    """Render a chart inside a Rich panel."""
     console.print(
         Panel(
             build_chart_text(title, labels, values),
@@ -195,7 +179,6 @@ def show_chart_panel(title: str, labels: Sequence[str], values: Sequence[Decimal
 
 
 def show_final_report(report: EventReport) -> None:
-    """Render the final summary, balances, settlements, and expense chart."""
     show_section(f"Session summary: {report.event_name}")
 
     summary = Table(show_header=False, box=None, pad_edge=False)
@@ -237,7 +220,6 @@ def show_final_report(report: EventReport) -> None:
 
 
 def show_transfers(transfers: Sequence[Transfer]) -> None:
-    """Render the simplified transfers."""
     if not transfers:
         show_success("No transfers are needed. Everyone is already settled.")
         return
@@ -260,7 +242,6 @@ def show_transfers(transfers: Sequence[Transfer]) -> None:
 
 
 def show_detailed_insights(insights: EventInsights) -> None:
-    """Render the optional deep-dive analytics view."""
     show_section("Deep dive insights")
 
     stat_panels = [

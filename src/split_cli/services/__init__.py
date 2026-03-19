@@ -1,5 +1,3 @@
-"""Business services for split-cli."""
-
 from .analytics import build_insights
 from .exporter import build_default_export_path, export_report_to_json
 from .settlements import build_settlements

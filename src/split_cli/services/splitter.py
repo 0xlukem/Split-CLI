@@ -1,5 +1,3 @@
-"""Core split calculations for the current equal-share release."""
-
 from __future__ import annotations
 
 from decimal import Decimal
@@ -9,12 +7,10 @@ from split_cli.models import Event, EventReport, ParticipantBalance, Person, qua
 
 
 def amount_to_cents(value: Decimal) -> int:
-    """Convert a Decimal amount to integer cents."""
     return int((quantize_money(value) * 100).to_integral_value())
 
 
 def cents_to_amount(value: int) -> Decimal:
-    """Convert integer cents back to a Decimal amount."""
     return quantize_money(Decimal(value) / Decimal("100"))
 
 
@@ -31,7 +27,6 @@ def compute_equal_shares(total: Decimal, participants: Sequence[Person]) -> dict
 
 
 def build_report(event: Event) -> EventReport:
-    """Build the final report used by the CLI and JSON export."""
     paid_by_person = {participant.name: Decimal("0.00") for participant in event.participants}
     for expense in event.expenses:
         paid_by_person[expense.payer] += expense.amount

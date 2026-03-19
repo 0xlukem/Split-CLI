@@ -1,5 +1,3 @@
-"""Typer entrypoint for the split CLI."""
-
 from __future__ import annotations
 
 from pathlib import Path
@@ -39,7 +37,6 @@ app = typer.Typer(
 
 
 def collect_people(participant_count: int) -> list[Person]:
-    """Collect participants interactively."""
     participants: list[Person] = []
     seen_names: set[str] = set()
 
@@ -68,7 +65,6 @@ def collect_people(participant_count: int) -> list[Person]:
 
 
 def collect_expenses(participants: list[Person]) -> list[Expense]:
-    """Collect expenses interactively."""
     expenses: list[Expense] = []
     expense_number = 1
 
@@ -95,7 +91,7 @@ def collect_expenses(participants: list[Person]) -> list[Expense]:
             return expenses
 
 
-def prompt_export_destination(suggested_path: Path) -> Path: 
+def prompt_export_destination(suggested_path: Path) -> Path:
     show_info(
         f"Press Enter to save the JSON to {suggested_path}, or type a different .json path."
     )
@@ -111,7 +107,6 @@ def prompt_export_destination(suggested_path: Path) -> Path:
 
 
 def maybe_export_report(report: EventReport, export_json: Path | None) -> None:
-    """Prompt the user to export the final report when needed."""
     destination = export_json
     if destination is None:
         if not Confirm.ask("[bold bright_cyan]Do you want to export this session to JSON?[/bold bright_cyan]"):
@@ -125,7 +120,6 @@ def maybe_export_report(report: EventReport, export_json: Path | None) -> None:
 
 
 def run_interactive(export_json: Path | None = None) -> None:
-    """Execute the full interactive flow."""
     show_welcome()
     show_section("Session setup")
 
@@ -167,7 +161,6 @@ def main(
         help="Write the final session report to a JSON file.",
     ),
 ) -> None:
-    """Run the interactive expense splitter."""
     if ctx.invoked_subcommand is not None:
         return
 

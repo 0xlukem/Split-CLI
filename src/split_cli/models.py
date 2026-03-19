@@ -1,5 +1,3 @@
-"""Domain models and validation for the split CLI."""
-
 from __future__ import annotations
 
 from decimal import Decimal, ROUND_HALF_UP
@@ -15,8 +13,6 @@ def quantize_money(value: Decimal | str | int | float) -> Decimal:
 
 
 class Person(BaseModel):
-    """Participant in an event."""
-
     name: str
 
     @field_validator("name")
@@ -29,8 +25,6 @@ class Person(BaseModel):
 
 
 class Expense(BaseModel):
-    """Expense loaded into the event."""
-
     payer: str
     amount: Decimal
     description: str | None = None
@@ -61,8 +55,6 @@ class Expense(BaseModel):
 
 
 class Event(BaseModel):
-    """Expense sharing event."""
-
     name: str
     participants: list[Person]
     expenses: list[Expense] = Field(default_factory=list)
@@ -107,8 +99,6 @@ class Event(BaseModel):
 
 
 class ParticipantBalance(BaseModel):
-    """Computed financial result for a participant."""
-
     name: str
     paid: Decimal
     share: Decimal
@@ -116,23 +106,17 @@ class ParticipantBalance(BaseModel):
 
 
 class Transfer(BaseModel):
-    """Settlement transfer from a debtor to a creditor."""
-
     from_person: str
     to_person: str
     amount: Decimal
 
 
 class ParticipantSpendingStat(BaseModel):
-    """Aggregate spending information for a participant."""
-
     name: str
     amount_paid: Decimal
 
 
 class ExpenseBreakdownItem(BaseModel):
-    """Expense row used for analytics and chart output."""
-
     label: str
     payer: str
     amount: Decimal
@@ -140,15 +124,11 @@ class ExpenseBreakdownItem(BaseModel):
 
 
 class PayerBreakdownItem(BaseModel):
-    """Participant total used for analytics and chart output."""
-
     payer: str
     amount: Decimal
 
 
 class ExpenseHighlight(BaseModel):
-    """Highlight information for the most expensive expense."""
-
     label: str
     payer: str
     amount: Decimal
@@ -156,8 +136,6 @@ class ExpenseHighlight(BaseModel):
 
 
 class EventInsights(BaseModel):
-    """Computed analytics derived from the final event report."""
-
     top_spender: ParticipantSpendingStat
     lowest_spender: ParticipantSpendingStat
     most_expensive_expense: ExpenseHighlight
@@ -166,8 +144,6 @@ class EventInsights(BaseModel):
 
 
 class EventReport(BaseModel):
-    """Final report for rendering and export."""
-
     event_name: str
     participant_count: int
     total_spent: Decimal

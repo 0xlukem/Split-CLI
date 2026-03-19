@@ -1,5 +1,3 @@
-"""Settlement generation for turning balances into transfers."""
-
 from __future__ import annotations
 
 from split_cli.models import ParticipantBalance, Transfer
