@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "splitty-cli"
-version = "0.1.0a2"
+version = "0.1.0a3"
 description = "Splitting group expenses made it fun on your terminal"
 readme = "README.md"
 requires-python = ">=3.11"
