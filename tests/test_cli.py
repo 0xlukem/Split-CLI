@@ -101,6 +101,40 @@ def test_cli_skips_optional_insights_when_declined(monkeypatch) -> None:
     assert "Deep dive insights" not in result.stdout
 
 
+def test_cli_no_animations_option_keeps_interactive_flow(monkeypatch) -> None:
+    monkeypatch.setattr("split_cli.ui.build_chart_text", lambda *args, **kwargs: Text("chart"))
+
+    result = runner.invoke(
+        app,
+        ["--no-animations"],
+        input="\n".join(
+            [
+                "Trip",
+                "2",
+                "Alice",
+                "Ben",
+                "1",
+                "50",
+                "Lunch",
+                "n",
+                "n",
+                "n",
+            ]
+        )
+        + "\n",
+        color=False,
+    )
+
+    assert result.exit_code == 0
+    assert "Splitty" in result.stdout
+    assert "Slipt your expenses fun edition." in result.stdout
+    assert "Use your terminal for more than call folders or do npm run dev." in result.stdout
+    assert "1. Name the event." in result.stdout
+    assert "Session setup" in result.stdout
+    assert "Event name" in result.stdout
+    assert result.stdout.index("1. Name the event.") < result.stdout.index("Session setup")
+
+
 def test_cli_saves_custom_backup_name_in_fixed_directory(monkeypatch, tmp_path: Path) -> None:
     monkeypatch.setattr("split_cli.ui.build_chart_text", lambda *args, **kwargs: Text("chart"))
     monkeypatch.setattr("split_cli.services.exporter.Path.home", lambda: tmp_path)

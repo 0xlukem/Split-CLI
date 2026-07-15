@@ -125,8 +125,8 @@ def maybe_export_report(
     show_success(f"JSON backup saved to {exported_file}")
 
 
-def run_interactive(export_json: Path | None = None) -> None:
-    show_welcome()
+def run_interactive(export_json: Path | None = None, animations: bool = True) -> None:
+    show_welcome(animations=animations)
     show_section("Session setup")
     session_started_at = datetime.now().astimezone()
 
@@ -167,12 +167,17 @@ def main(
         "-o",
         help="Write the final session report to a JSON file.",
     ),
+    animations: bool = typer.Option(
+        True,
+        "--animations/--no-animations",
+        help="Enable or disable the animated intro.",
+    ),
 ) -> None:
     if ctx.invoked_subcommand is not None:
         return
 
     try:
-        run_interactive(export_json=export_json)
+        run_interactive(export_json=export_json, animations=animations)
     except (KeyboardInterrupt, EOFError):
         console.print()
         show_error("Session cancelled by user.")

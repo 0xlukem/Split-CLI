@@ -28,6 +28,7 @@ dependencies = [
   "rich>=13.7,<14.0",
   "pydantic>=2.7,<3.0",
   "plotext>=5.3,<6.0",
+  "terminaltexteffects>=0.15,<0.16",
 ]
 
 [project.optional-dependencies]
