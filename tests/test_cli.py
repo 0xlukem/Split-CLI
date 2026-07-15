@@ -128,7 +128,7 @@ def test_cli_no_animations_option_keeps_interactive_flow(monkeypatch) -> None:
     assert result.exit_code == 0
     assert "Splitty" in result.stdout
     assert "Split your expenses, fun edition." in result.stdout
-    assert "Use your terminal for more than call folders or do npm run dev." in result.stdout
+    assert "Use your terminal for more than cd folders or do npm run dev." in result.stdout
     assert "1. Name the event." in result.stdout
     assert "Session setup" in result.stdout
     assert "Event name" in result.stdout

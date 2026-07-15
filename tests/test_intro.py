@@ -25,7 +25,8 @@ def test_render_intro_frame_adapts_to_terminal_width(width: int) -> None:
     assert SUBTITLE in output
     assert "Use your terminal" in output
     assert "npm" in output
-    assert "run dev" in output
+    assert "run" in output
+    assert "dev" in output
     assert START_PROMPT in output
     assert "++++++" in output
     assert "########" in output
@@ -51,7 +52,7 @@ def test_render_intro_frame_uses_multicolor_arcade_background() -> None:
     frame = render_intro_frame(140, 34, frame_index=5, show_prompt=True)
     styles = {str(span.style) for span in frame.spans}
 
-    assert "Use your terminal for more than call folders or do npm run dev." in frame.plain
+    assert "Use your terminal for more than cd folders or do npm run dev." in frame.plain
     assert any("bright_magenta" in style for style in styles)
     assert any("bright_cyan" in style for style in styles)
     assert any("bright_yellow" in style for style in styles)

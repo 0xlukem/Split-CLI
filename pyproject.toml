@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "splitty-cli"
-version = "0.1.0a4"
+version = "0.1.0b1"
 description = "Splitting group expenses made it fun on your terminal"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -12,7 +12,7 @@ license = { file = "LICENSE" }
 authors = [{ name = "Lucas Malizia" }]
 keywords = ["cli", "expenses", "group-expenses", "terminal", "rich", "typer"]
 classifiers = [
-  "Development Status :: 3 - Alpha",
+  "Development Status :: 4 - Beta",
   "Environment :: Console",
   "Intended Audience :: End Users/Desktop",
   "License :: OSI Approved :: MIT License",
@@ -42,7 +42,7 @@ dev = [
 splitty-cli = "split_cli.cli:app"
 
 [project.urls]
-Homepage = "https://github.com/0xlukem/splitty-cli"
+Homepage = "https://github.com/0xlukem/Split-CLI"
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]

@@ -13,7 +13,7 @@ from rich.text import Text
 
 BRAND_LABEL = "Splitty"
 SUBTITLE = "Split your expenses, fun edition."
-TERMINAL_TAGLINE = "Use your terminal for more than call folders or do npm run dev."
+TERMINAL_TAGLINE = "Use your terminal for more than calling folders or do npm run dev."
 START_PROMPT = "Press Enter to begin"
 COMPACT_TITLE = "Splitty"
 INTRO_COPY = "Turn shared expenses into a clear settlement plan in a few focused prompts."
@@ -152,28 +152,28 @@ SCALE_FRAMES = (
 )
 
 COMPACT_SCALE = r"""
-                                        
-                  +=++                  
-                  ++++                  
-      +=+         +=++         +=+*     
-     +++++   +++++==+++++++   +++++     
-      ++++++++++++++++++++++++++++      
-     +++++        +**+        +++++     
-     +++++         +++        +++ +     
-    ++ + ++        +++       ++ + ++    
-    ++ + ++        +++       ++ + ++    
-   *+  +  ++       +++       +  +  ++   
-   ++  +  ++       +++      ++  +  ++   
-  ++   +   ++      +++     ++   +   ++  
-  +*   +   ++      +++     ++   +    +  
- ++    +    ++     +++     +    +    ++ 
- +=++++++++==+    ++++    +=++++++++==+ 
- =--===+======   +==+++   ==-===+====== 
-   =--=====      ++++++      --======   
-               ++++++++++               
-            ++====++++++++++            
-            ++++++++++++++++            
-                                        
+
+                  +=++
+                  ++++
+      +=+         +=++         +=+*
+     +++++   +++++==+++++++   +++++
+      ++++++++++++++++++++++++++++
+     +++++        +**+        +++++
+     +++++         +++        +++ +
+    ++ + ++        +++       ++ + ++
+    ++ + ++        +++       ++ + ++
+   *+  +  ++       +++       +  +  ++
+   ++  +  ++       +++      ++  +  ++
+  ++   +   ++      +++     ++   +   ++
+  +*   +   ++      +++     ++   +    +
+ ++    +    ++     +++     +    +    ++
+ +=++++++++==+    ++++    +=++++++++==+
+ =--===+======   +==+++   ==-===+======
+   =--=====      ++++++      --======
+               ++++++++++
+            ++====++++++++++
+            ++++++++++++++++
+
 """.strip("\n")
 
 
